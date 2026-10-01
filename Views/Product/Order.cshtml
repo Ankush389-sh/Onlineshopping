@@ -1,0 +1,49 @@
+@{
+    ViewData["Title"] = "Order Product";
+}
+
+<h1 class="page-title text-center">🛒 Place Your Order</h1>
+<p class="subtitle text-center">Enter your details to submit the order.</p>
+
+<div class="order-card">
+
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success">
+            <strong>✓ Success!</strong> @ViewBag.Message
+        </div>
+    }
+
+    <form asp-action="Order" method="post">
+
+        <!-- Hidden field submits ProductId with the order form. -->
+        <input type="hidden"
+               name="ProductId"
+               value="@ViewBag.ProductId" />
+
+        <div class="mb-4">
+            <label class="form-label fw-bold">
+                Customer Name
+            </label>
+
+            <input type="text"
+                   name="CustomerName"
+                   class="form-control"
+                   placeholder="Enter your name"
+                   required />
+        </div>
+
+        <button type="submit"
+                class="btn btn-success w-100 py-2">
+            ✓ Submit Order
+        </button>
+    </form>
+
+    <div class="text-center mt-3">
+        <a asp-controller="Product"
+           asp-action="Index"
+           class="btn btn-primary btn-sm">
+            ← Continue Shopping
+        </a>
+    </div>
+</div>

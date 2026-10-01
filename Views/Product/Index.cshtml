@@ -1,0 +1,55 @@
+@model List<OnlineShopping.Models.Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1 class="page-title">🛍️ Online Shopping Products</h1>
+<p class="subtitle">Browse products, check discounts and place your order.</p>
+
+<div class="info-box">
+    <strong>Customer:</strong> @Context.Request.Cookies["CustomerName"]
+    &nbsp; | &nbsp;
+    <strong>Selected Category:</strong> @Context.Session.GetString("SelectedCategory")
+</div>
+
+<div class="table-responsive product-table">
+    <table class="table table-hover mb-0">
+        <thead>
+            <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Discount</th>
+                <th>Final Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var product in Model)
+            {
+                // Assign a sample 10% discount for demonstration.
+                product.DiscountPercentage = 10;
+
+                <tr>
+                    <td><strong>@product.ProductId</strong></td>
+                    <td><strong>@product.ProductName</strong></td>
+                    <td>@product.Category</td>
+                    <td class="original-price">₹@product.Price</td>
+                    <td><span class="discount-badge">@product.DiscountPercentage% OFF</span></td>
+                    <td class="discount-price">₹@product.GetDiscountedPrice()</td>
+                    <td>
+                        <a asp-controller="Product"
+                           asp-action="Details"
+                           asp-route-id="@product.ProductId"
+                           class="btn btn-primary btn-sm">
+                            View Details
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

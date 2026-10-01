@@ -1,0 +1,57 @@
+@model OnlineShopping.Models.Product
+
+@{
+    ViewData["Title"] = "Product Details";
+
+    // Assign a sample 10% discount for demonstration.
+    Model.DiscountPercentage = 10;
+}
+
+<h1 class="page-title">📦 Product Details</h1>
+<p class="subtitle">Review the product before placing your order.</p>
+
+<div class="product-card p-4">
+    <h3>@Model.ProductName</h3>
+
+    <hr />
+
+    <p>
+        <span class="detail-label">Product ID:</span>
+        <span class="detail-value">@Model.ProductId</span>
+    </p>
+
+    <p>
+        <span class="detail-label">Category:</span>
+        <span class="detail-value">@Model.Category</span>
+    </p>
+
+    <p>
+        <span class="detail-label">Original Price:</span>
+        <span class="original-price">₹@Model.Price</span>
+    </p>
+
+    <p>
+        <span class="detail-label">Discount:</span>
+        <span class="discount-badge">@Model.DiscountPercentage% OFF</span>
+    </p>
+
+    <p>
+        <span class="detail-label">Discounted Price:</span>
+        <span class="final-price">₹@Model.GetDiscountedPrice()</span>
+    </p>
+
+    <div class="mt-4">
+        <a asp-controller="Product"
+           asp-action="Order"
+           asp-route-id="@Model.ProductId"
+           class="btn btn-success me-2">
+            🛒 Order Product
+        </a>
+
+        <a asp-controller="Product"
+           asp-action="Index"
+           class="btn btn-primary">
+            ← Back to Products
+        </a>
+    </div>
+</div>
